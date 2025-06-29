@@ -1,73 +1,14 @@
 {
-    "name": "CalmPulse - Real-time Breathing Companion",
+    "name": "CalmPulse - Professional Breathing Companion",
     "short_name": "CalmPulse",
-    "description": "Real-time breathing companion with heart rate monitoring for anxiety relief and mindfulness",
+    "description": "Clean, professional breathing app for anxiety relief and mindfulness",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#667eea",
-    "theme_color": "#667eea",
+    "background_color": "#2c3e50",
+    "theme_color": "#2c3e50",
     "orientation": "portrait-primary",
     "scope": "/",
     "lang": "en",
     "categories": ["health", "lifestyle", "medical"],
-    "shortcuts": [
-        {
-            "name": "Start Emergency Session",
-            "short_name": "Emergency",
-            "description": "Quick 2-minute breathing session for panic attacks",
-            "url": "/?action=emergency",
-            "icons": [
-                {
-                    "src": "/icon-emergency-96.png",
-                    "sizes": "96x96",
-                    "type": "image/png"
-                }
-            ]
-        },
-        {
-            "name": "Start Regular Session",
-            "short_name": "Breathe",
-            "description": "Start a regular breathing session",
-            "url": "/?action=session",
-            "icons": [
-                {
-                    "src": "/icon-breathe-96.png",
-                    "sizes": "96x96",
-                    "type": "image/png"
-                }
-            ]
-        }
-    ],
-    "icons": [],
-    "screenshots": [
-        {
-            "src": "/screenshot-mobile-1.png",
-            "sizes": "390x844",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "Breathing interface with heart rate monitoring"
-        },
-        {
-            "src": "/screenshot-mobile-2.png",
-            "sizes": "390x844",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "Session setup and pattern selection"
-        },
-        {
-            "src": "/screenshot-desktop-1.png",
-            "sizes": "1280x800",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "Desktop breathing interface"
-        }
-    ],
-    "prefer_related_applications": false,
-    "edge_side_panel": {
-        "preferred_width": 400
-    },
-    "handle_links": "preferred",
-    "launch_handler": {
-        "client_mode": "focus-existing"
-    }
+    "icons": []
 }

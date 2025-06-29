@@ -2,141 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CalmPulse - Real-time Breathing Companion</title>
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Stylesheets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalmPulse - Professional Breathing Companion</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- External Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
 </head>
 <body>
     <div class="container">
-        <!-- App Header -->
-        <header class="app-header">
-            <h1 class="app-title">CalmPulse</h1>
-            <p class="app-subtitle">Real-time breathing companion</p>
-        </header>
-
-        <!-- Emergency Button -->
-        <button class="emergency-btn" id="emergencyBtn">
-            <span class="emergency-icon">🚨</span>
-            <span class="emergency-text">Emergency</span>
-        </button>
-
-        <!-- Setup Screen -->
-        <div id="setupScreen" class="setup-screen">
-            <div class="setup-content">
-                <h2 class="setup-title">Welcome to CalmPulse</h2>
-                <div class="setup-instructions">
-                    <p>Place your fingertip gently over the <strong>back camera</strong> and <strong>flashlight</strong> of your phone.</p>
-                    <p>Keep your finger steady for accurate heart rate detection.</p>
-                </div>
-                <div class="camera-placeholder">
-                    <div class="camera-icon">📱</div>
-                    <div class="camera-text">Camera Detection Area</div>
-                </div>
-                <div class="setup-buttons">
-                    <button class="btn btn-primary" id="startSessionBtn">Start Breathing Session</button>
-                    <button class="btn btn-secondary" id="skipHeartRateBtn">Skip Heart Rate Monitoring</button>
-                </div>
-            </div>
+        <div class="header">
+            <h1>CalmPulse</h1>
+            <p>Professional Breathing Companion</p>
         </div>
 
-        <!-- Main Breathing Interface -->
-        <div id="breathingInterface" class="breathing-interface hidden">
-            <!-- Heart Rate Display -->
-            <div class="heart-rate-display">
-                <div class="heart-icon">❤️</div>
-                <div class="bpm-value" id="bpmValue">--</div>
-                <div class="bpm-label">BPM</div>
-                <div class="heart-trend" id="heartTrend">
-                    <span class="trend-text">Detecting...</span>
+        <div class="content">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <h2>Guided Breathing Exercise</h2>
+                <p>Take a moment to relax with our scientifically-designed breathing technique. This exercise will help reduce stress and promote calmness.</p>
+                
+                <div class="technique-info">
+                    <h3>4-7-8 Breathing Technique</h3>
+                    <p>Inhale for 4 seconds, hold for 7 seconds, exhale for 8 seconds. This technique activates your body's natural relaxation response.</p>
                 </div>
+
+                <button class="btn" onclick="startSession()">Begin Session</button>
+                <button class="btn btn-secondary" onclick="showCustom()">Custom Duration</button>
             </div>
 
-            <!-- Breathing Pattern Selector -->
-            <div class="breathing-pattern">
-                <div class="pattern-title">Breathing Pattern</div>
-                <div class="pattern-options">
-                    <div class="pattern-option active" data-pattern="478">
-                        <div class="pattern-name">4-7-8 Relaxing</div>
-                        <div class="pattern-desc">Deep relaxation</div>
-                    </div>
-                    <div class="pattern-option" data-pattern="box">
-                        <div class="pattern-name">Box Breathing</div>
-                        <div class="pattern-desc">Focus & control</div>
-                    </div>
-                    <div class="pattern-option" data-pattern="coherent">
-                        <div class="pattern-name">Coherent Breathing</div>
-                        <div class="pattern-desc">Balance & harmony</div>
+            <!-- Breathing Interface -->
+            <div id="breathingInterface" class="breathing-interface">
+                <div class="session-header">
+                    <div class="session-timer" id="sessionTimer">5:00</div>
+                    <div class="session-status" id="sessionStatus">Prepare to begin</div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Follow the breathing guide below</h3>
+                    <div class="phase-indicator">
+                        <div class="phase" id="phaseInhale">Inhale (4s)</div>
+                        <div class="phase" id="phaseHold">Hold (7s)</div>
+                        <div class="phase" id="phaseExhale">Exhale (8s)</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Main Breathing Circle -->
-            <div class="breathing-container">
                 <div class="breathing-circle" id="breathingCircle">
+                    <svg class="progress-ring">
+                        <circle class="progress-ring-circle" cx="110" cy="110" r="110"></circle>
+                    </svg>
                     <div class="breath-text" id="breathText">Ready</div>
-                    <div class="breath-progress" id="breathProgress"></div>
                 </div>
-                <div class="pulse-indicator" id="pulseIndicator"></div>
+
+                <div class="controls">
+                    <button class="btn btn-secondary" onclick="pauseSession()" id="pauseBtn">Pause</button>
+                    <button class="btn" onclick="endSession()">End Session</button>
+                </div>
             </div>
 
-            <!-- Session Stats -->
-            <div class="session-stats" id="sessionStats">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value" id="sessionTime">0:00</div>
+            <!-- Session Complete -->
+            <div id="sessionComplete" class="session-complete">
+                <h2>Session Complete</h2>
+                <p>Well done! You've completed your breathing session.</p>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="completedDuration">5:00</div>
                         <div class="stat-label">Duration</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="breathCount">0</div>
-                        <div class="stat-label">Breaths</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="avgBpm">--</div>
-                        <div class="stat-label">Avg BPM</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="bpmChange">--</div>
-                        <div class="stat-label">BPM ∆</div>
+                    <div class="stat">
+                        <div class="stat-value" id="breathCycles">16</div>
+                        <div class="stat-label">Breath Cycles</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Controls -->
-            <div class="controls">
-                <button class="btn btn-secondary" id="pauseBtn">
-                    <span class="btn-icon">⏸️</span>
-                    <span class="btn-text">Pause</span>
-                </button>
-                <button class="btn btn-primary" id="endBtn">
-                    <span class="btn-icon">⏹️</span>
-                    <span class="btn-text">End Session</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Loading Overlay -->
-        <div id="loadingOverlay" class="loading-overlay hidden">
-            <div class="loading-content">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">Initializing camera...</div>
+                <button class="btn" onclick="newSession()">New Session</button>
+                <button class="btn btn-secondary" onclick="goHome()">Home</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript -->
     <script src="app.js"></script>
 </body>
 </html>
