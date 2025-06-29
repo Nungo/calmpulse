@@ -1,0 +1,105 @@
+{
+  "name": "calmpulse",
+  "version": "1.0.0",
+  "description": "Real-time breathing companion with heart rate monitoring for anxiety relief and mindfulness",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx http-server -p 8080 -c-1",
+    "dev": "npx live-server --port=8080 --no-browser",
+    "build": "echo 'No build process needed - vanilla JS app'",
+    "deploy": "npx vercel --prod",
+    "deploy-netlify": "npx netlify deploy --prod --dir=.",
+    "test": "echo 'Tests not implemented yet'",
+    "lint": "npx eslint *.js",
+    "format": "npx prettier --write *.{js,css,html,json}",
+    "validate": "npx html-validate index.html",
+    "lighthouse": "npx lighthouse http://localhost:8080 --view",
+    "pwa-check": "npx pwa-asset-generator icon-512x512.png icons --manifest manifest.json"
+  },
+  "keywords": [
+    "breathing",
+    "meditation",
+    "anxiety",
+    "heart-rate",
+    "mindfulness",
+    "pwa",
+    "health",
+    "wellness",
+    "mobile",
+    "biofeedback"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
+  },
+  "license": "MIT",
+  "homepage": "https://your-domain.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/calmpulse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/calmpulse/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "html-validate": "^8.0.0",
+    "lighthouse": "^11.0.0",
+    "live-server": "^1.2.2",
+    "http-server": "^14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "pwa": {
+    "name": "CalmPulse",
+    "short_name": "CalmPulse",
+    "theme_color": "#667eea",
+    "background_color": "#667eea",
+    "display": "standalone",
+    "start_url": "/",
+    "scope": "/"
+  },
+  "deployment": {
+    "vercel": {
+      "functions": false,
+      "redirects": [
+        {
+          "source": "/(.*)",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "/sw.js",
+          "headers": [
+            {
+              "key": "Service-Worker-Allowed",
+              "value": "/"
+            }
+          ]
+        }
+      ]
+    },
+    "netlify": {
+      "_redirects": "/* /index.html 200",
+      "_headers": "/sw.js\n  Service-Worker-Allowed: /"
+    }
+  },
+  "performance": {
+    "lighthouse": {
+      "performance": "> 90",
+      "accessibility": "> 95",
+      "best-practices": "> 90",
+      "seo": "> 90",
+      "pwa": "> 90"
+    }
+  }
+}

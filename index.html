@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CalmPulse - Real-time Breathing Companion</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- App Header -->
+        <header class="app-header">
+            <h1 class="app-title">CalmPulse</h1>
+            <p class="app-subtitle">Real-time breathing companion</p>
+        </header>
+
+        <!-- Emergency Button -->
+        <button class="emergency-btn" id="emergencyBtn">
+            <span class="emergency-icon">🚨</span>
+            <span class="emergency-text">Emergency</span>
+        </button>
+
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="setup-screen">
+            <div class="setup-content">
+                <h2 class="setup-title">Welcome to CalmPulse</h2>
+                <div class="setup-instructions">
+                    <p>Place your fingertip gently over the <strong>back camera</strong> and <strong>flashlight</strong> of your phone.</p>
+                    <p>Keep your finger steady for accurate heart rate detection.</p>
+                </div>
+                <div class="camera-placeholder">
+                    <div class="camera-icon">📱</div>
+                    <div class="camera-text">Camera Detection Area</div>
+                </div>
+                <div class="setup-buttons">
+                    <button class="btn btn-primary" id="startSessionBtn">Start Breathing Session</button>
+                    <button class="btn btn-secondary" id="skipHeartRateBtn">Skip Heart Rate Monitoring</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Breathing Interface -->
+        <div id="breathingInterface" class="breathing-interface hidden">
+            <!-- Heart Rate Display -->
+            <div class="heart-rate-display">
+                <div class="heart-icon">❤️</div>
+                <div class="bpm-value" id="bpmValue">--</div>
+                <div class="bpm-label">BPM</div>
+                <div class="heart-trend" id="heartTrend">
+                    <span class="trend-text">Detecting...</span>
+                </div>
+            </div>
+
+            <!-- Breathing Pattern Selector -->
+            <div class="breathing-pattern">
+                <div class="pattern-title">Breathing Pattern</div>
+                <div class="pattern-options">
+                    <div class="pattern-option active" data-pattern="478">
+                        <div class="pattern-name">4-7-8 Relaxing</div>
+                        <div class="pattern-desc">Deep relaxation</div>
+                    </div>
+                    <div class="pattern-option" data-pattern="box">
+                        <div class="pattern-name">Box Breathing</div>
+                        <div class="pattern-desc">Focus & control</div>
+                    </div>
+                    <div class="pattern-option" data-pattern="coherent">
+                        <div class="pattern-name">Coherent Breathing</div>
+                        <div class="pattern-desc">Balance & harmony</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Breathing Circle -->
+            <div class="breathing-container">
+                <div class="breathing-circle" id="breathingCircle">
+                    <div class="breath-text" id="breathText">Ready</div>
+                    <div class="breath-progress" id="breathProgress"></div>
+                </div>
+                <div class="pulse-indicator" id="pulseIndicator"></div>
+            </div>
+
+            <!-- Session Stats -->
+            <div class="session-stats" id="sessionStats">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="sessionTime">0:00</div>
+                        <div class="stat-label">Duration</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="breathCount">0</div>
+                        <div class="stat-label">Breaths</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgBpm">--</div>
+                        <div class="stat-label">Avg BPM</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="bpmChange">--</div>
+                        <div class="stat-label">BPM ∆</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button class="btn btn-secondary" id="pauseBtn">
+                    <span class="btn-icon">⏸️</span>
+                    <span class="btn-text">Pause</span>
+                </button>
+                <button class="btn btn-primary" id="endBtn">
+                    <span class="btn-icon">⏹️</span>
+                    <span class="btn-text">End Session</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Initializing camera...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
